@@ -69,10 +69,14 @@ class Cli
         puts "Search for an ingredient or dish name, or type 'random' to see a random recipe:"
         puts " "
         @ingredient = gets.strip.downcase
-        #if it returns nil, object will be created
-        #if not nil, it will return existing object
-        Api.get_recipes(@ingredient) if !Ingredient.find_by_ingredient(@ingredient)
-        print_recipes(Ingredient.find_by_ingredient(@ingredient).recipes)
+        #use fetch to see if ingredient exists in API. If not, prompt user to try again.
+        #if ingredient exists, print a list of recipes.
+        #if(Hash.fetch(@ingredient))
+            Api.get_recipes(@ingredient) if !Ingredient.find_by_ingredient(@ingredient)
+            print_recipes(Ingredient.find_by_ingredient(@ingredient).recipes)
+        else
+            puts "Sorry, we don't have any recipes for #{@ingredient}. Please type 'ingredient' to try again."
+        end
     end
     
     def space
