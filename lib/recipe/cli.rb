@@ -6,20 +6,28 @@ class Cli
         prompt_ingredient
         prompt
         input = gets.strip.downcase
-        #re-write as case statement
+        #re-write as case statement -- DONE
         while input != 'exit'
             if input == 'list'
-                print_recipes(Ingredient.find_by_ingredient(@ingredient).recipes) #returns an object
+                #returns a list of recipes containing the ingredient 
+                #reaches into ingredient class and pulls .recipes
+                print_recipes(Ingredient.find_by_ingredient(@ingredient).recipes)
+            elsif input == 'ingredient'
+                prompt_ingredient
+            elsif input == 'random'
+                    #recipe will equal a call on the API's get random method
+                    recipe = Api.get_random
+                    #print recipe will print the recipe retrieved from get_random method.
+                    print_recipe(recipe)
             elsif input.to_i > 0 && input.to_i <= Ingredient.find_by_ingredient(@ingredient).recipes.count
                 recipe = Ingredient.find_by_ingredient(@ingredient).recipes[input.to_i - 1]
                 Api.get_recipe_info(recipe) if !recipe.instructions
                 print_recipe(recipe)
-            elsif input == 'ingredient'
-                prompt_ingredient
             else 
-                puts "Nothing matches your input. Please try again."
+                puts "Command does not exist. Please try again."
                 puts " "
             end
+
             prompt 
             input = gets.strip.downcase
         end
@@ -38,7 +46,7 @@ class Cli
     
     def print_recipe(recipe)
         space 
-        puts "Recipe for #{recipe.name} -- Cuisine: #{recipe.cuisine}"
+        puts "Recipe for #{recipe.name} ---  #{recipe.cuisine}"
         puts " "
         puts "Ingredients:"
           recipe.ingredients.each_with_index do |ingredient, index|

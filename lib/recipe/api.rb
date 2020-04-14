@@ -11,7 +11,7 @@ class Api
         new_ingredient = Ingredient.new(ingredient)
         #could create attribute hash
         recipes.each do |r| 
-            new_recipe = Recipe.new(name: r["strMeal"], recipe_id: r["idMeal"], ingredient: ingredient)}
+            new_recipe = Recipe.new(name: r["strMeal"], recipe_id: r["idMeal"], ingredient: ingredient)
             #pushes the recipe object into an array of recipes containing the ingredient
             new_ingredient.recipes << new_recipe
         end
@@ -31,8 +31,8 @@ class Api
         end
     end 
 
-    #def self.get_random
-      #return a random recipe
-    #end
+    def self.get_random
+
+    end
 
 end 
