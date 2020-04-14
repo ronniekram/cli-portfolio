@@ -1,12 +1,14 @@
 class Recipe 
-    attr_accessor :name, :recipe_id, :ingredient. :recipe_detail
+    attr_accessor :name, :recipe_id, :ingredient, :instructions 
+
     @@all = []
 
     def initialize(name:, recipe_id:, ingredient:)
         @name = name 
         @recipe_id = recipe_id
         @ingredient = ingredient
-        @@all << self
+        #@instructions = instructions  
+        @@all << self 
     end
     
     def self.all
@@ -14,6 +16,6 @@ class Recipe
     end
     
     def self.find_by_ingredient(ingredient)
-        @@all.select {|r| r.ingredient == ingredient}
+        @@all.select {|r| d.ingredient == ingredient}
     end 
 end 
