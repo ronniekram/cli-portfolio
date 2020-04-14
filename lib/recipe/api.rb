@@ -31,8 +31,8 @@ class Api
         end
     end 
 
-    def self.get_random
+    #def self.get_random
 
-    end
+    #end
 
 end 

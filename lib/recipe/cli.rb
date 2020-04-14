@@ -1,5 +1,5 @@
-class Cli 
-  #split run into smaller methods
+class Cli
+    #split run into small methods 
     def run
         puts " "
         puts "Welcome to Ronnie's Recipe Finder"
@@ -8,33 +8,30 @@ class Cli
         input = gets.strip.downcase
         #re-write as case statement -- DONE
         while input != 'exit'
-            if input == 'list'
-                #returns a list of recipes containing the ingredient 
+            case
+            when input == 'list'
+                    #returns a list of recipes containing the ingredient 
                 #reaches into ingredient class and pulls .recipes
                 print_recipes(Ingredient.find_by_ingredient(@ingredient).recipes)
-            elsif input == 'ingredient'
+            when input == 'ingredient'
                 prompt_ingredient
-            elsif input == 'random'
-                    #recipe will equal a call on the API's get random method
-                    recipe = Api.get_random
-                    #print recipe will print the recipe retrieved from get_random method.
-                    print_recipe(recipe)
-            elsif input.to_i > 0 && input.to_i <= Ingredient.find_by_ingredient(@ingredient).recipes.count
+            #when input == 'random'
+            #call on Api.get_random
+            when input.to_i > 0 && input.to_i <= Ingredient.find_by_ingredient(@ingredient).recipes.count
                 recipe = Ingredient.find_by_ingredient(@ingredient).recipes[input.to_i - 1]
                 Api.get_recipe_info(recipe) if !recipe.instructions
                 print_recipe(recipe)
-            else 
+            else
                 puts "Command does not exist. Please try again."
                 puts " "
-            end
-
+            end 
             prompt 
             input = gets.strip.downcase
         end
         puts " "
         puts "Goodbye and happy cooking!" 
     end
-    
+
     def print_recipes(recipes)
         space
         puts "Recipe(s) matching your search term:"
