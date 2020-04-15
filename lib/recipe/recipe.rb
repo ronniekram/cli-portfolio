@@ -3,7 +3,7 @@ class Recipe
 
     @@all = []
 
-    def initialize(name:, recipe_id:, ingredient:)
+    def initialize(name:, recipe_id:, ingredient: nil)
         @name = name 
         @recipe_id = recipe_id
         @ingredient = ingredient
@@ -16,4 +16,8 @@ class Recipe
     def self.all
         @@all  
     end
+
+    def self.find_by_name(name)
+        @@all.find {|recipe| recipe.name == name}
+    end 
 end 

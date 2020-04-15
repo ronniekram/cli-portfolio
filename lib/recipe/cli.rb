@@ -44,7 +44,7 @@ class Cli
     
     def print_recipe(recipe)
         space 
-        puts "Recipe for #{recipe.name}   #{recipe.cuisine}"
+        puts "Recipe for '#{recipe.name}'   #{recipe.cuisine}"
         puts " "
         puts "Ingredients:"
           recipe.ingredients.each_with_index do |ingredient, index|
@@ -57,7 +57,7 @@ class Cli
 
     def print_random
         recipe = Api.get_random
-        puts recipe
+        print_recipe(recipe)
     end 
 
     def prompt
