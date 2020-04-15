@@ -33,6 +33,13 @@ class Api
             recipe.measures << info[k] if (k.include? "Measure") && info[k]
             recipe.cuisine << info[k] if (k.include? "Area") && info[k]
         end
+    end
+    
+    def self.get_random
+        url = "https://www.themealdb.com/api/json/v1/1/random.php"
+        response = Net::HTTP.get(URI(url))
+        recipe = JSON.parse(response)["meals"]
+        puts recipe
     end 
 
 end 
