@@ -10,11 +10,15 @@ class Api
         #creates new ingredient
         new_ingredient = Ingredient.new(ingredient)
         #could create attribute hash
+        if !recipes.nil?
           recipes.each do |r| 
             new_recipe = Recipe.new(name: r["strMeal"], recipe_id: r["idMeal"], ingredient: ingredient)
             #pushes the recipe object into an array of recipes containing the ingredient
             new_ingredient.recipes << new_recipe
           end
+        else 
+            
+        end
     end 
 
     def self.get_recipe_info(recipe)
