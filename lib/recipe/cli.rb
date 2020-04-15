@@ -1,7 +1,7 @@
 class Cli
     def run
         puts " "
-        puts "Welcome to Ronnie's Recipe Finder"
+        puts "Welcome to Ronnie's Recipe Finder".colorize(:yellow)
         prompt_ingredient
         prompt
         input = gets.gsub(/[^a-zA-z]/, "").downcase
@@ -20,20 +20,20 @@ class Cli
                 Api.get_recipe_info(recipe) if !recipe.instructions
                 print_recipe(recipe)
             else
-                puts "Command does not exist. Please try again."
+                puts "Command does not exist. Please try again.".colorize(:red)
                 puts " "
             end 
             prompt 
             input = gets.strip.downcase
         end
         space
-        puts "Goodbye and happy cooking!"
+        puts "Goodbye and happy cooking!".colorize(:yellow)
         puts " " 
     end
 
     def print_recipes(recipes)
         space
-        puts "Recipe(s) matching your search term:"
+        puts "Recipe(s) matching your search term:".colorize(:green)
         puts " "
         recipes.each.with_index(1) do |recipe, index|
             puts "#{index}. #{recipe.name}"
@@ -42,15 +42,15 @@ class Cli
     
     def print_recipe(recipe)
         space 
-        puts "Recipe for '#{recipe.name}'   #{recipe.cuisine}"
+        puts "Recipe for '#{recipe.name}'   #{recipe.cuisine}".colorize(:green)
         puts " "
-        puts "Ingredients:"
+        puts "Ingredients:".colorize(:green)
           recipe.ingredients.each_with_index do |ingredient, index|
-              puts "#{recipe.measures[index]} #{ingredient}"
+              puts "#{recipe.measures[index]} #{ingredient}".colorize(:light_green)
           end
         puts " "
-        puts "Instructions:"
-        puts "#{recipe.instructions}" 
+        puts "Instructions:".colorize(:green)
+        puts "#{recipe.instructions}".colorize(:light_green) 
     end 
 
     def print_random
@@ -70,7 +70,7 @@ class Cli
 
     def prompt_ingredient
         puts " "
-        puts "Search for an ingredient, or type 'random' to see a random recipe:"
+        puts "Search for an ingredient, or type 'random' to see a random recipe:".colorize(:yellow)
         puts " "
         @ingredient = gets.gsub(/[^a-zA-z]/, "").downcase
 
