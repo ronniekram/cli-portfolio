@@ -5,6 +5,7 @@ class Cli
         prompt_ingredient
         prompt
         input = gets.gsub(/[^a-zA-z]/, "").downcase
+
         while input != 'exit'
             case
             when input == 'list'
@@ -15,7 +16,6 @@ class Cli
                 space
                 print_random
             when input.to_i > 0 && input.to_i <= Ingredient.find_by_ingredient(@ingredient).recipes.count
-                input.gsub(/[^\d]/, "")
                 recipe = Ingredient.find_by_ingredient(@ingredient).recipes[input.to_i - 1]
                 Api.get_recipe_info(recipe) if !recipe.instructions
                 print_recipe(recipe)
