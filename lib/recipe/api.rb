@@ -17,7 +17,7 @@ class Api
             new_ingredient.recipes << new_recipe
           end
         else 
-            
+            puts " "  
         end
     end 
 
@@ -26,10 +26,12 @@ class Api
         response = Net::HTTP.get(URI(url))
         info = JSON.parse(response)["meals"][0]
         recipe.instructions = info["strInstructions"]
-
+        recipe.cuisine = info["strArea"]
+        
         info.keys.each do |k|
             recipe.ingredients << info[k] if (k.include? "Ingredient") && info[k]
             recipe.measures << info[k] if (k.include? "Measure") && info[k]
+            recipe.cuisine << info[k] if (k.include? "Area") && info[k]
         end
     end 
 

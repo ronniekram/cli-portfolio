@@ -41,7 +41,7 @@ class Cli
     
     def print_recipe(recipe)
         space 
-        puts "Recipe for #{recipe.name}"
+        puts "Recipe for #{recipe.name}   #{recipe.cuisine}"
         puts " "
         puts "Ingredients:"
           recipe.ingredients.each_with_index do |ingredient, index|
