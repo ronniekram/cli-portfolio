@@ -1,19 +1,13 @@
 class Api 
 
     def self.get_recipes(ingredient)
-        #finds the ingredient in the API
         url = "https://www.themealdb.com/api/json/v1/1/filter.php?i=#{ingredient}"
-        #stringifies the ingredient information
         response = Net::HTTP.get(URI(url))
-        #parses the ingredient information into a hash -- meals in the key attached to everything
         recipes = JSON.parse(response)["meals"]
-        #creates new ingredient
         new_ingredient = Ingredient.new(ingredient)
-        #could create attribute hash
         if !recipes.nil?
           recipes.each do |r| 
             new_recipe = Recipe.new(name: r["strMeal"], recipe_id: r["idMeal"], ingredient: ingredient)
-            #pushes the recipe object into an array of recipes containing the ingredient
             new_ingredient.recipes << new_recipe
           end
         else 
@@ -38,8 +32,7 @@ class Api
     def self.get_random
         url = "https://www.themealdb.com/api/json/v1/1/random.php"
         response = Net::HTTP.get(URI(url))
-        recipe = JSON.parse(response)["meals"]
-        puts recipe
+        random = JSON.parse(response)["meals"]
     end 
 
 end 

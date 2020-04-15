@@ -56,7 +56,8 @@ class Cli
     end 
 
     def print_random
-        Api.get_random 
+        recipe = Api.get_random
+        puts recipe
     end 
 
     def prompt
@@ -71,11 +72,16 @@ class Cli
 
     def prompt_ingredient
         puts " "
-        puts "Search for an ingredient:"
+        puts "Search for an ingredient, or type 'random' to see a random recipe:"
         puts " "
         @ingredient = gets.strip.downcase
-        Api.get_recipes(@ingredient) if !Ingredient.find_by_ingredient(@ingredient)
-        print_recipes(Ingredient.find_by_ingredient(@ingredient).recipes)
+
+        if @ingredient == 'random'
+            print_random
+        else
+          Api.get_recipes(@ingredient) if !Ingredient.find_by_ingredient(@ingredient)
+          print_recipes(Ingredient.find_by_ingredient(@ingredient).recipes)
+        end 
     end
     
     def space
