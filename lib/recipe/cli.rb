@@ -10,13 +10,11 @@ class Cli
         while input != 'exit'
             case
             when input == 'list'
-                    #returns a list of recipes containing the ingredient 
+                #returns a list of recipes containing the ingredient 
                 #reaches into ingredient class and pulls .recipes
                 print_recipes(Ingredient.find_by_ingredient(@ingredient).recipes)
             when input == 'ingredient'
                 prompt_ingredient
-            #when input == 'random'
-            #call on Api.get_random
             when input.to_i > 0 && input.to_i <= Ingredient.find_by_ingredient(@ingredient).recipes.count
                 recipe = Ingredient.find_by_ingredient(@ingredient).recipes[input.to_i - 1]
                 Api.get_recipe_info(recipe) if !recipe.instructions
@@ -43,7 +41,7 @@ class Cli
     
     def print_recipe(recipe)
         space 
-        puts "Recipe for #{recipe.name} ---  #{recipe.cuisine}"
+        puts "Recipe for #{recipe.name}"
         puts " "
         puts "Ingredients:"
           recipe.ingredients.each_with_index do |ingredient, index|
@@ -66,21 +64,18 @@ class Cli
 
     def prompt_ingredient
         puts " "
-        puts "Search for an ingredient or dish name, or type 'random' to see a random recipe:"
+        puts "Search for an ingredient or type 'random' to see a random recipe:"
         puts " "
         @ingredient = gets.strip.downcase
         #use fetch to see if ingredient exists in API. If not, prompt user to try again.
         #if ingredient exists, print a list of recipes.
-        #if(Hash.fetch(@ingredient))
-            Api.get_recipes(@ingredient) if !Ingredient.find_by_ingredient(@ingredient)
-            print_recipes(Ingredient.find_by_ingredient(@ingredient).recipes)
-        else
-            puts "Sorry, we don't have any recipes for #{@ingredient}. Please type 'ingredient' to try again."
-        end
+        Api.get_recipes(@ingredient) if !Ingredient.find_by_ingredient(@ingredient)
+        print_recipes(Ingredient.find_by_ingredient(@ingredient).recipes)
     end
     
     def space
         puts "-----------------------"
         puts " "
     end 
+
 end 

@@ -1,5 +1,5 @@
 class Recipe 
-    attr_accessor :name, :recipe_id, :ingredient, :instructions, :ingredients, :measures, :cuisine 
+    attr_accessor :name, :recipe_id, :ingredient, :instructions, :ingredients, :measures
 
     @@all = []
 
@@ -9,7 +9,6 @@ class Recipe
         @ingredient = ingredient
         @ingredients = []
         @measures = []
-        @cuisine = cuisine  
         @@all << self 
     end
     
