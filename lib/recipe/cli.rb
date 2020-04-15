@@ -1,17 +1,13 @@
 class Cli
-    #split run into small methods 
     def run
         puts " "
         puts "Welcome to Ronnie's Recipe Finder"
         prompt_ingredient
         prompt
-        input = gets.strip.downcase
-        #re-write as case statement -- DONE
+        input = gets.gsub(/[^a-zA-z]/, "").downcase
         while input != 'exit'
             case
             when input == 'list'
-                #returns a list of recipes containing the ingredient 
-                #reaches into ingredient class and pulls .recipes
                 print_recipes(Ingredient.find_by_ingredient(@ingredient).recipes)
             when input == 'ingredient'
                 prompt_ingredient
@@ -19,6 +15,7 @@ class Cli
                 space
                 print_random
             when input.to_i > 0 && input.to_i <= Ingredient.find_by_ingredient(@ingredient).recipes.count
+                input.gsub(/[^\d]/, "")
                 recipe = Ingredient.find_by_ingredient(@ingredient).recipes[input.to_i - 1]
                 Api.get_recipe_info(recipe) if !recipe.instructions
                 print_recipe(recipe)
@@ -29,8 +26,9 @@ class Cli
             prompt 
             input = gets.strip.downcase
         end
-        puts " "
-        puts "Goodbye and happy cooking!" 
+        space
+        puts "Goodbye and happy cooking!"
+        puts " " 
     end
 
     def print_recipes(recipes)
@@ -74,7 +72,7 @@ class Cli
         puts " "
         puts "Search for an ingredient, or type 'random' to see a random recipe:"
         puts " "
-        @ingredient = gets.strip.downcase
+        @ingredient = gets.gsub(/[^a-zA-z]/, "").downcase
 
         if @ingredient == 'random'
             print_random
