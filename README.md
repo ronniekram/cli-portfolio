@@ -19,7 +19,10 @@ gem install colorize
 ```
 
 #To Run
-In your terminal, make sure you're in the correct folder using 'pwd' and 'cd' if needed, 
+
+- Make sure you're in the correct folder('cli-portfolio-master').
+- Type 'ruby bin/recipe' to start the program.
+- You'll be given a prompt to begin. Have fun!
 
 #License 
 Copyright 2020 ronniekram
