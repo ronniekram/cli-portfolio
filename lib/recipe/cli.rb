@@ -18,6 +18,7 @@ class Cli
         recipes.each.with_index(1) do |recipe, index|
             puts "#{index}. #{recipe.name}"
         end 
+        puts " "
         puts "Enter a number to see more information.".colorize(:red)
         input = gets.gsub(/[^\d]/, "")
         numbers(input)
@@ -75,6 +76,7 @@ class Cli
     end 
 
     def prompt
+        space
         puts "Options:".colorize(:red) 
         puts "Type 'list' to see the list again.".colorize(:yellow)
         puts "Type 'ingredient' to select a new ingredient.".colorize(:green)
