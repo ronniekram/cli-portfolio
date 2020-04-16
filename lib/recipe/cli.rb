@@ -6,23 +6,26 @@ class Cli
         prompt
         input = gets.gsub(/[^a-zA-z]/xi, "")
         input_options(input)
-        puts " "
-        puts "---------------------------------------------"
-        puts " "
-        puts "Goodbye and happy cooking!".colorize(:yellow)
+        goodbye
     end
 
     def print_recipes(recipes)
-        puts " "
-        puts "Recipe(s) matching your search term:".colorize(:green)
-        puts " "
-        recipes.each.with_index(1) do |recipe, index|
+        if !recipes.empty?
+          puts " "
+          puts "Recipe(s) matching your search term:".colorize(:green)
+          puts " "
+          recipes.each.with_index(1) do |recipe, index|
             puts "#{index}. #{recipe.name}"
-        end 
-        puts " "
-        puts "Enter a number to see more information.".colorize(:red)
-        input = gets.gsub(/[^\d]/, "")
-        numbers(input)
+          end 
+          puts " "
+          puts "Enter a number to see more information.".colorize(:red)
+          input = gets.gsub(/[^\d]/, "")
+          numbers(input)
+        else 
+            puts " "
+            puts "We don't have any recipes matching that term.".colorize(:red)
+            prompt_ingredient
+        end
     end
     
     def print_recipe(recipe)
@@ -96,6 +99,13 @@ class Cli
           print_recipes(Ingredient.find_by_ingredient(@ingredient).recipes)
         end 
     end
+
+    def goodbye 
+        puts " "
+        puts "---------------------------------------------"
+        puts " "
+        puts "Goodbye and happy cooking!".colorize(:yellow)
+    end 
 end 
 
 #if no recipes found -- do not prompt for number 

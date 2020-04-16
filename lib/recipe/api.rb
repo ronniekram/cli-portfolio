@@ -10,8 +10,6 @@ class Api
             new_recipe = Recipe.new(name: r["strMeal"], recipe_id: r["idMeal"], ingredient: ingredient)
             new_ingredient.recipes << new_recipe
           end
-        else
-            nil
         end
     end 
 
