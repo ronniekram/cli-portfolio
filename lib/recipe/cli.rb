@@ -92,12 +92,13 @@ class Cli
         puts "Search for an ingredient or dish name, or type 'random' to see a random recipe:".colorize(:yellow)
         puts " "
         @ingredient = gets.strip.downcase
-#.gsub(/[^a-zA-Z]/, "")
         if @ingredient == 'random'
             print_random
-        elsif @ingredient.empty? || @ingredient.match(/[^\d]/)
+        elsif @ingredient.empty? || @ingredient.match(/[^A-Za-z]/)
             puts " "
             puts "That isn't valid input. Please try again."
+            puts " "
+            prompt_ingredient
         else
           Api.get_recipes(@ingredient) if !Ingredient.find_by_ingredient(@ingredient)
           print_recipes(Ingredient.find_by_ingredient(@ingredient).recipes)
