@@ -10,12 +10,14 @@ In order to run Ronnie's Recipe Finder, you'll need to have the following gems i
 * HTTParty
 * Json 
 * Colorize 
+* Pry
 
 *If you don't have these gems, you can install them by entering the following in your terminal:*
 ``` 
 gem install httparty
 gem install json
 gem install colorize
+gem install pry
 ```
 
 # To Run

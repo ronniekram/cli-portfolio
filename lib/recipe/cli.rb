@@ -3,7 +3,7 @@ class Cli
         puts " "
         puts "Welcome to Ronnie's Recipe Finder".colorize(:yellow)
         prompt_ingredient
-        prompt
+        #prompt
         input = gets.gsub(/[^a-zA-z]/, "").strip.downcase
         input_options(input)
         goodbye
@@ -44,13 +44,14 @@ class Cli
     def print_random
         recipe = Api.get_random
         print_recipe(recipe)
+        prompt
     end 
 
     def input_options(input)
         while input != 'exit'
             case
             when input == 'list'
-            print_recipes(Ingredient.find_by_ingredient(@ingredient).recipes)
+                  print_recipes(Ingredient.find_by_ingredient(@ingredient).recipes)
             when input == 'ingredient'
                 prompt_ingredient
             when input == 'random'
@@ -61,7 +62,7 @@ class Cli
             end 
             prompt 
             input = gets.gsub(/[^a-zA-z]/, "").strip.downcase
-        end
+        end 
     end 
 
     def numbers(input)
@@ -87,12 +88,13 @@ class Cli
 
     def prompt_ingredient
         puts " "
-        puts "Search for an ingredient or type 'random' to see a random recipe:".colorize(:yellow)
+        puts "Search for an ingredient by name to see a list of recipes utilizing it, enter 'random' to see a random recipe, or enter 'exit' to leave:".colorize(:yellow)
         puts " "
-        @ingredient = gets.gsub(/[^A-Za-z]/, "").strip.downcase
+        @ingredient = gets.strip.downcase
+        #.gsub(/[^A-Za-z]/, "")
         if @ingredient == 'random'
             print_random
-        elsif @ingredient.empty? || @ingredient.match(/[^A-Za-z]/)
+        elsif @ingredient.empty? || @ingredient.match(/[^A-Za-z]/) || @ingredient.to_i.negative? 
             puts " "
             puts "That isn't valid input. Please try again."
             puts " "
@@ -100,6 +102,7 @@ class Cli
         else
           Api.get_recipes(@ingredient) if !Ingredient.find_by_ingredient(@ingredient)
           print_recipes(Ingredient.find_by_ingredient(@ingredient).recipes)
+          prompt
         end 
     end
 
@@ -108,5 +111,6 @@ class Cli
         puts "---------------------------------------------"
         puts " "
         puts "Goodbye and happy cooking!".colorize(:yellow)
+        puts " "
     end 
 end 
