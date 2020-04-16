@@ -4,12 +4,46 @@ class Cli
         puts "Welcome to Ronnie's Recipe Finder".colorize(:yellow)
         prompt_ingredient
         prompt
-        input = gets.gsub(/[^a-zA-z]/, "").downcase
+        input = gets.gsub(/[^a-zA-z\d]/, "")
+        input_options(input)
+        space
+        puts "Goodbye and happy cooking!".colorize(:yellow)
+        puts " " 
+    end
 
+    def print_recipes(recipes)
+        puts " "
+        puts "Recipe(s) matching your search term:".colorize(:green)
+        puts " "
+        recipes.each.with_index(1) do |recipe, index|
+            puts "#{index}. #{recipe.name}"
+        end 
+        space
+    end
+    
+    def print_recipe(recipe)
+        puts "Recipe for '#{recipe.name}'   #{recipe.cuisine}".colorize(:green)
+        puts " "
+        puts "Ingredients:".colorize(:color => :black, :background => :white)
+          recipe.ingredients.each_with_index do |ingredient, index|
+              puts "#{recipe.measures[index]} #{ingredient}"
+          end
+        puts " "
+        puts "Instructions:".colorize(:color => :black, :background => :white)
+        puts "#{recipe.instructions}"
+        space 
+    end 
+
+    def print_random
+        recipe = Api.get_random
+        print_recipe(recipe)
+    end 
+
+    def input_options(input)
         while input != 'exit'
             case
             when input == 'list'
-                print_recipes(Ingredient.find_by_ingredient(@ingredient).recipes)
+            print_recipes(Ingredient.find_by_ingredient(@ingredient).recipes)
             when input == 'ingredient'
                 prompt_ingredient
             when input == 'random'
@@ -24,47 +58,16 @@ class Cli
                 puts " "
             end 
             prompt 
-            input = gets.strip.downcase
+            input = gets.gsub(/[^a-zA-z\d]/, "")
         end
-        space
-        puts "Goodbye and happy cooking!".colorize(:yellow)
-        puts " " 
-    end
-
-    def print_recipes(recipes)
-        space
-        puts "Recipe(s) matching your search term:".colorize(:green)
-        puts " "
-        recipes.each.with_index(1) do |recipe, index|
-            puts "#{index}. #{recipe.name}"
-        end 
-    end
-    
-    def print_recipe(recipe)
-        space 
-        puts "Recipe for '#{recipe.name}'   #{recipe.cuisine}".colorize(:green)
-        puts " "
-        puts "Ingredients:".colorize(:green)
-          recipe.ingredients.each_with_index do |ingredient, index|
-              puts "#{recipe.measures[index]} #{ingredient}".colorize(:light_green)
-          end
-        puts " "
-        puts "Instructions:".colorize(:green)
-        puts "#{recipe.instructions}".colorize(:light_green) 
-    end 
-
-    def print_random
-        recipe = Api.get_random
-        print_recipe(recipe)
     end 
 
     def prompt
-        puts " "
-        puts "Choose a recipe number to see more information." 
-        puts "Type 'list' to see the list again."
-        puts "Type 'ingredient' to select a new ingredient."
-        puts "Type 'random' to see a random recipe."
-        puts "Or type 'exit' to leave."
+        puts "Enter a recipes number to see more information.".colorize(:red) 
+        puts "Type 'list' to see the list again.".colorize(:yellow)
+        puts "Type 'ingredient' to select a new ingredient.".colorize(:green)
+        puts "Type 'random' to see a random recipe.".colorize(:blue)
+        puts "Or type 'exit' to leave.".colorize(:magenta)
         puts " "
     end 
 

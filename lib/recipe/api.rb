@@ -19,14 +19,6 @@ class Api
         url = "https://www.themealdb.com/api/json/v1/1/lookup.php?i=#{recipe.recipe_id}"
         response = Net::HTTP.get(URI(url))
         info = JSON.parse(response)["meals"][0]
-        #recipe.instructions = info["strInstructions"]
-        #recipe.cuisine = info["strArea"]
-        
-        #info.keys.each do |k|
-            #recipe.ingredients << info[k] if (k.include? "Ingredient") && info[k] && info[k] != ""
-            #recipe.measures << info[k] if (k.include? "Measure") && info[k] && info[k] != ""
-            #recipe.cuisine << info[k] if (k.include? "Area") && info[k]
-        #end
         populate_recipe(info, recipe)
     end
     
@@ -44,7 +36,6 @@ class Api
     end 
 
     def self.populate_recipe(info, recipe)
-        #recipe.name = info["strMeal"]
         recipe.instructions = info["strInstructions"]
         recipe.cuisine = info["strArea"]
         
