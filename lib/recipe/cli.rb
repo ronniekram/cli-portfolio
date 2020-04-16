@@ -18,7 +18,7 @@ class Cli
             puts "#{index}. #{recipe.name}"
           end 
           puts " "
-          puts "Enter a number to see more information.".colorize(:red)
+          puts "Enter a number to see more information.".colorize(:green)
           input = gets.gsub(/[^\d]/, "").strip
           numbers(input)
         else 
@@ -64,15 +64,14 @@ class Cli
         end
     end 
 
-    #need error & return list when invalid number entered after recipes print
     def numbers(input)
         if input.to_i > 0 && input.to_i <= Ingredient.find_by_ingredient(@ingredient).recipes.count
           recipe = Ingredient.find_by_ingredient(@ingredient).recipes[input.to_i - 1]
           Api.get_recipe_info(recipe) if !recipe.instructions
           print_recipe(recipe) 
-        elsif input.to_i == 0 || input.to_i > Ingredient.find_by_ingredient(@ingredient).recipes.count
+        else
             puts " "
-            "Sorry, that's an invalid number."
+            puts "Sorry, that's an invalid number.".colorize(:red)
         end
     end 
 
@@ -86,16 +85,19 @@ class Cli
         puts " "
     end 
 
-    #shouldnt be able to enter a number in response to ingredient or random prompt
+    #shouldnt be able to enter a number, space, return or symbol in response to ingredient or random prompt
     #if statement to prevent space, number and symbol from returning Big List
     def prompt_ingredient
         puts " "
         puts "Search for an ingredient or dish name, or type 'random' to see a random recipe:".colorize(:yellow)
         puts " "
-        @ingredient = gets.gsub(/[^a-zA-Z]/, "").strip.downcase
-
+        @ingredient = gets.strip.downcase
+#.gsub(/[^a-zA-Z]/, "")
         if @ingredient == 'random'
             print_random
+        elsif @ingredient.empty? || @ingredient.match(/[^\d]/)
+            puts " "
+            puts "That isn't valid input. Please try again."
         else
           Api.get_recipes(@ingredient) if !Ingredient.find_by_ingredient(@ingredient)
           print_recipes(Ingredient.find_by_ingredient(@ingredient).recipes)
