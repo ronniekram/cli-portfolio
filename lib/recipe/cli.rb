@@ -72,7 +72,6 @@ class Cli
         else
             puts " "
             puts "Sorry, that's an invalid number.".colorize(:red)
-            print_recipes(recipes)
         end
     end 
 
