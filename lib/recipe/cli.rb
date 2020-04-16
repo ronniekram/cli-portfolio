@@ -4,7 +4,7 @@ class Cli
         puts "Welcome to Ronnie's Recipe Finder".colorize(:yellow)
         prompt_ingredient
         prompt
-        input = gets.gsub(/[^a-zA-z\d]/, "")
+        input = gets.gsub(/[^a-zA-z]/, "")
         input_options(input)
         space
         puts "Goodbye and happy cooking!".colorize(:yellow)
@@ -18,7 +18,9 @@ class Cli
         recipes.each.with_index(1) do |recipe, index|
             puts "#{index}. #{recipe.name}"
         end 
-        space
+        puts "Enter a number to see more information.".colorize(:red)
+        input = gets.gsub(/[^\d]/, "")
+        numbers(input)
     end
     
     def print_recipe(recipe)
@@ -49,10 +51,10 @@ class Cli
             when input == 'random'
                 space
                 print_random
-            when input.to_i > 0 && input.to_i <= Ingredient.find_by_ingredient(@ingredient).recipes.count
-                recipe = Ingredient.find_by_ingredient(@ingredient).recipes[input.to_i - 1]
-                Api.get_recipe_info(recipe) if !recipe.instructions
-                print_recipe(recipe)
+            #when input.to_i > 0 && input.to_i <= Ingredient.find_by_ingredient(@ingredient).recipes.count
+                #recipe = Ingredient.find_by_ingredient(@ingredient).recipes[input.to_i - 1]
+                #Api.get_recipe_info(recipe) if !recipe.instructions
+                #print_recipe(recipe)
             else
                 puts "Command does not exist. Please try again.".colorize(:red)
                 puts " "
@@ -62,8 +64,18 @@ class Cli
         end
     end 
 
+    def numbers(input)
+        if input.to_i > 0 && input.to_i <= Ingredient.find_by_ingredient(@ingredient).recipes.count
+          recipe = Ingredient.find_by_ingredient(@ingredient).recipes[input.to_i - 1]
+          Api.get_recipe_info(recipe) if !recipe.instructions
+          print_recipe(recipe)
+        else 
+            "Sorry, that's an invalid number."
+        end
+    end 
+
     def prompt
-        puts "Enter a recipes number to see more information.".colorize(:red) 
+        puts "Options:".colorize(:red) 
         puts "Type 'list' to see the list again.".colorize(:yellow)
         puts "Type 'ingredient' to select a new ingredient.".colorize(:green)
         puts "Type 'random' to see a random recipe.".colorize(:blue)
