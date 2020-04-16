@@ -72,6 +72,7 @@ class Cli
         else
             puts " "
             puts "Sorry, that's an invalid number.".colorize(:red)
+            print_recipes(recipes)
         end
     end 
 
@@ -85,13 +86,11 @@ class Cli
         puts " "
     end 
 
-    #shouldnt be able to enter a number, space, return or symbol in response to ingredient or random prompt
-    #if statement to prevent space, number and symbol from returning Big List
     def prompt_ingredient
         puts " "
-        puts "Search for an ingredient or dish name, or type 'random' to see a random recipe:".colorize(:yellow)
+        puts "Search for an ingredient or type 'random' to see a random recipe:".colorize(:yellow)
         puts " "
-        @ingredient = gets.strip.downcase
+        @ingredient = gets.gsub(/[^A-Za-z]/, "").strip.downcase
         if @ingredient == 'random'
             print_random
         elsif @ingredient.empty? || @ingredient.match(/[^A-Za-z]/)
