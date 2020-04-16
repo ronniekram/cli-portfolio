@@ -61,7 +61,7 @@ class Cli
                 puts " "
             end 
             prompt 
-            input = gets.gsub(/[^a-zA-z\d]/, "")
+            input = gets.gsub(/[^a-zA-z]/, "").downcase
         end
     end 
 
