@@ -4,11 +4,12 @@ class Cli
         puts "Welcome to Ronnie's Recipe Finder".colorize(:yellow)
         prompt_ingredient
         prompt
-        input = gets.gsub(/[^a-zA-z]/, "")
+        input = gets.gsub(/[^a-zA-z]/, "").downcase
         input_options(input)
-        space
+        puts " "
+        puts "---------------------------------------------"
+        puts " "
         puts "Goodbye and happy cooking!".colorize(:yellow)
-        puts " " 
     end
 
     def print_recipes(recipes)
@@ -34,7 +35,7 @@ class Cli
         puts " "
         puts "Instructions:".colorize(:color => :black, :background => :white)
         puts "#{recipe.instructions}"
-        space 
+        puts " "
     end 
 
     def print_random
@@ -50,12 +51,7 @@ class Cli
             when input == 'ingredient'
                 prompt_ingredient
             when input == 'random'
-                space
                 print_random
-            #when input.to_i > 0 && input.to_i <= Ingredient.find_by_ingredient(@ingredient).recipes.count
-                #recipe = Ingredient.find_by_ingredient(@ingredient).recipes[input.to_i - 1]
-                #Api.get_recipe_info(recipe) if !recipe.instructions
-                #print_recipe(recipe)
             else
                 puts "Command does not exist. Please try again.".colorize(:red)
                 puts " "
@@ -71,12 +67,14 @@ class Cli
           Api.get_recipe_info(recipe) if !recipe.instructions
           print_recipe(recipe)
         else 
+            puts " "
             "Sorry, that's an invalid number."
         end
     end 
 
     def prompt
-        space
+        puts " "
+        puts " "
         puts "Options:".colorize(:red) 
         puts "Type 'list' to see the list again.".colorize(:yellow)
         puts "Type 'ingredient' to select a new ingredient.".colorize(:green)
@@ -87,7 +85,7 @@ class Cli
 
     def prompt_ingredient
         puts " "
-        puts "Search for an ingredient, or type 'random' to see a random recipe:".colorize(:yellow)
+        puts "Search for an ingredient or dish name, or type 'random' to see a random recipe:".colorize(:yellow)
         puts " "
         @ingredient = gets.gsub(/[^a-zA-z]/, "").downcase
 
@@ -98,11 +96,7 @@ class Cli
           print_recipes(Ingredient.find_by_ingredient(@ingredient).recipes)
         end 
     end
-    
-    def space
-        puts " "
-        puts "-----------------------"
-        puts " "
-    end 
-
 end 
+
+#if no recipes found -- do not prompt for number 
+#shouldnt be able to enter a number in response to ingredient or random prompt
