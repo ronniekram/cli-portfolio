@@ -1,31 +1,31 @@
-#Ronnie's Recipe Finder 
+# Ronnie's Recipe Finder 
 In Ronnie's Recipe Finder you'll be able to: 
 - search for recipes by ingredient
 - search for recipes by a dish name
 - view full recipes 
 - see a random recipe
 
-#Getting Started 
+# Getting Started 
 In order to run Ronnie's Recipe Finder, you'll need to have the following gems installed: 
-- HTTParty
-- Json 
-- Colorize 
+* HTTParty
+* Json 
+* Colorize 
 
-If you don't have these gems, you can install them by entering the following in your terminal:
+*If you don't have these gems, you can install them by entering the following in your terminal:*
 ``` 
 gem install httparty
 gem install json
 gem install colorize
 ```
 
-#To Run
+# To Run
 
 - Make sure you're in the correct folder('cli-portfolio-master').
 - Type 'ruby bin/recipe' to start the program.
 - You'll be given a prompt to begin. Have fun!
 
-#License 
-Copyright 2020 ronniekram
+# License 
+**Copyright 2020 ronniekram**
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
