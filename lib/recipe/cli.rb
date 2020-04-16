@@ -4,7 +4,7 @@ class Cli
         puts "Welcome to Ronnie's Recipe Finder".colorize(:yellow)
         prompt_ingredient
         prompt
-        input = gets.gsub(/[^a-zA-z]/, "").downcase
+        input = gets.gsub(/[^a-zA-z]/xi, "")
         input_options(input)
         puts " "
         puts "---------------------------------------------"
@@ -57,7 +57,7 @@ class Cli
                 puts " "
             end 
             prompt 
-            input = gets.gsub(/[^a-zA-z]/, "").downcase
+            input = gets.gsub(/[^a-zA-z]/xi, "")
         end
     end 
 
@@ -87,7 +87,7 @@ class Cli
         puts " "
         puts "Search for an ingredient or dish name, or type 'random' to see a random recipe:".colorize(:yellow)
         puts " "
-        @ingredient = gets.gsub(/[^a-zA-z]/, "").downcase
+        @ingredient = gets.gsub(/[^a-zA-z]/xi, "").downcase
 
         if @ingredient == 'random'
             print_random
@@ -100,3 +100,5 @@ end
 
 #if no recipes found -- do not prompt for number 
 #shouldnt be able to enter a number in response to ingredient or random prompt
+#going directly from random to list throws an error 
+#if statement to prevent space and number from returning Big List

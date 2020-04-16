@@ -9,7 +9,9 @@ class Api
           recipes.each do |r| 
             new_recipe = Recipe.new(name: r["strMeal"], recipe_id: r["idMeal"], ingredient: ingredient)
             new_ingredient.recipes << new_recipe
-          end 
+          end
+        else
+            nil
         end
     end 
 
