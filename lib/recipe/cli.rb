@@ -3,7 +3,7 @@ class Cli
         puts " "
         puts "Welcome to Ronnie's Recipe Finder".colorize(:yellow)
         prompt_ingredient
-        #prompt
+        prompt
         input = gets.gsub(/[^a-zA-z]/, "").strip.downcase
         input_options(input)
         goodbye
@@ -19,7 +19,7 @@ class Cli
           end 
           puts " "
           puts "Enter a number to see more information.".colorize(:green)
-          input = gets.gsub(/[^\d]/, "").strip
+          input = gets.strip
           numbers(input)
         else 
             puts " "
@@ -44,14 +44,19 @@ class Cli
     def print_random
         recipe = Api.get_random
         print_recipe(recipe)
-        prompt
     end 
 
     def input_options(input)
         while input != 'exit'
             case
             when input == 'list'
-                  print_recipes(Ingredient.find_by_ingredient(@ingredient).recipes)
+                if Ingredient.find_by_ingredient(@ingredient)
+                    print_recipes(Ingredient.find_by_ingredient(@ingredient).recipes)
+                else 
+                    puts " "
+                    puts "You don't have any recipes in your list! Try searching for an ingredient."
+                    prompt_ingredient
+                end 
             when input == 'ingredient'
                 prompt_ingredient
             when input == 'random'
@@ -59,20 +64,22 @@ class Cli
             else
                 puts "Command does not exist. Please try again.".colorize(:red)
                 puts " "
-            end 
-            prompt 
-            input = gets.gsub(/[^a-zA-z]/, "").strip.downcase
+            end
+            prompt
+            input = gets.gsub(/[^a-zA-z]/, "").strip.downcase 
         end 
     end 
 
     def numbers(input)
-        if input.to_i > 0 && input.to_i <= Ingredient.find_by_ingredient(@ingredient).recipes.count
+        range = Ingredient.find_by_ingredient(@ingredient).recipes.count
+
+        if input.to_i > 0 && input.to_i <= range && input.to_i.positive? && !input.empty? #&& input.match(/[^\d]/)
           recipe = Ingredient.find_by_ingredient(@ingredient).recipes[input.to_i - 1]
           Api.get_recipe_info(recipe) if !recipe.instructions
-          print_recipe(recipe) 
+          print_recipe(recipe)
         else
             puts " "
-            puts "Sorry, that's an invalid number.".colorize(:red)
+            puts "Sorry, that's not a valid number.".colorize(:red)
         end
     end 
 
@@ -88,21 +95,18 @@ class Cli
 
     def prompt_ingredient
         puts " "
-        puts "Search for an ingredient by name to see a list of recipes utilizing it, enter 'random' to see a random recipe, or enter 'exit' to leave:".colorize(:yellow)
+        puts "Enter the name of an ingredient to see a list of recipes utilizing it or enter 'exit' to go to the main menu:".colorize(:yellow)
         puts " "
-        @ingredient = gets.strip.downcase
-        #.gsub(/[^A-Za-z]/, "")
-        if @ingredient == 'random'
-            print_random
-        elsif @ingredient.empty? || @ingredient.match(/[^A-Za-z]/) || @ingredient.to_i.negative? 
+        @ingredient = gets.gsub(/[^A-Za-z]/, "").strip.downcase
+        if @ingredient.empty?
             puts " "
             puts "That isn't valid input. Please try again."
-            puts " "
             prompt_ingredient
+        elsif @ingredient == 'exit'
+            puts " "
         else
           Api.get_recipes(@ingredient) if !Ingredient.find_by_ingredient(@ingredient)
           print_recipes(Ingredient.find_by_ingredient(@ingredient).recipes)
-          prompt
         end 
     end
 
