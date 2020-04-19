@@ -54,7 +54,7 @@ class Cli
                     print_recipes(Ingredient.find_by_ingredient(@ingredient).recipes)
                 else 
                     puts " "
-                    puts "You don't have any recipes in your list! Try searching for an ingredient."
+                    puts "Try searching for an ingredient to see a list of recipes."
                     prompt_ingredient
                 end 
             when input == 'ingredient'
@@ -73,7 +73,7 @@ class Cli
     def numbers(input)
         range = Ingredient.find_by_ingredient(@ingredient).recipes.count
 
-        if input.to_i > 0 && input.to_i <= range && input.to_i.positive? && !input.empty? #&& input.match(/[^\d]/)
+        if input.to_i > 0 && input.to_i <= range && input.to_i.positive? && !input.empty?
           recipe = Ingredient.find_by_ingredient(@ingredient).recipes[input.to_i - 1]
           Api.get_recipe_info(recipe) if !recipe.instructions
           print_recipe(recipe)
