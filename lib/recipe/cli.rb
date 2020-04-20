@@ -3,6 +3,7 @@ class Cli
         puts " "
         puts "Welcome to Ronnie's Recipe Finder".colorize(:yellow)
         prompt_ingredient
+        #used prompt/input twice -- new method or..?
         prompt
         input = gets.gsub(/[^a-zA-z]/, "").strip.downcase
         input_options(input)
